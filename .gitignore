@@ -1,9 +1,7 @@
-# Python cache
+# .gitignore
+
+venv/
+db/
+.env
 __pycache__/
 *.pyc
-
-# Environment variables
-.env
-
-# Vector Database Files
-db/
