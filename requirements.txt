@@ -1,11 +1,13 @@
-# Version 3
+# Letter Agent – Dependencies (Chroma removed)
 langchain==0.2.6
 langchain-core==0.2.10
 langchain-google-genai==1.0.6
 langchain-community==0.2.6
 langsmith==0.1.81
-chromadb==0.4.24
+
 pandas
 pypdf
 streamlit
 python-dotenv
+
+faiss-cpu  # ✅ Lightweight vector DB, no SQLite needed

@@ -1,13 +1,13 @@
-# src/pipeline/ingest.py
+# ingest.py
+import os
 import pandas as pd
+from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_community.vectorstores import Chroma
-import os
-from dotenv import load_dotenv
-load_dotenv()
+from langchain_community.vectorstores import FAISS  # ✅ Replaced Chroma
 
+load_dotenv()
 
 DATA_PATH = "data/"
 DB_PATH = "db/"
@@ -24,13 +24,10 @@ def ingest_data():
     chunked_docs = text_splitter.split_documents(documents)
     print(f"📄 Loaded and split {len(chunked_docs)} document chunks.")
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    
-    vector_store = Chroma.from_documents(
-        documents=chunked_docs,
-        embedding=embeddings,
-        persist_directory=DB_PATH
-    )
-    print(f"🎉 Data ingestion complete. Vector store created at: {DB_PATH}")
+
+    vector_store = FAISS.from_documents(chunked_docs, embeddings)
+    vector_store.save_local(DB_PATH)
+    print(f"🎉 Data ingestion complete. FAISS vector store saved at: {DB_PATH}")
 
 if __name__ == '__main__':
     ingest_data()
