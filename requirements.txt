@@ -1,3 +1,4 @@
+# Version 3
 langchain==0.2.6
 langchain-core==0.2.10
 langchain-google-genai==1.0.6
